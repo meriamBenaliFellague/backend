@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const registShema = new Schema(
+const client = new Schema(
   {
     id: {
       type: String,
@@ -26,5 +26,6 @@ const registShema = new Schema(
   }
 );
 
-const regist = mongoose.model("logins", registShema);
-module.exports = regist;
+const SchemaClient = mongoose.model("Client", client);
+const SchemaUser = mongoose.model("Responsable", client);
+module.exports.SchemaClient = SchemaClient;
