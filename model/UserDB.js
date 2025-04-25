@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const client = new Schema(
+const user = new Schema(
   {
     id: {
       type: String,
@@ -9,7 +9,7 @@ const client = new Schema(
     },
     username: {
       type: String,
-      required: true,  // يعني أن اسم المستخدم يجب أن يتم إدخاله 
+      required: true,
     },
     email: {
       type: String,
@@ -19,17 +19,12 @@ const client = new Schema(
       type: String,
       required: true,
     },
-    rec: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "reclamation",
-    }
-
+  //role: { type: String, enum: ['user', 'admin'], default: 'user' }
   },
   {
     timestamps: true,
   }
 );
 
-
-const SchemaClient = mongoose.model("client", client);
-module.exports = {SchemaClient};
+const SchemaUser = mongoose.model("user", user);
+module.exports = {SchemaUser};

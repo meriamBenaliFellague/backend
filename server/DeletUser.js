@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const methode = require("../controle/methode");
 
-
-router.post("/", methode.create_account);
+router.delete(
+    //correct
+    "/DeletUser/:usertId",
+    methode.delet_accountUser
+);
 module.exports=router;
