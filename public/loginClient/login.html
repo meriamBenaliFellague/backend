@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login And Registration Form Client| ADE</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="/loginClient/login.css">
+    <link rel="stylesheet" href="login.css">
 </head>
 <body>
     <div class="container">
         <div class="form-box login">
-            <form action="" class="one">
+            <form action="/api/login" method="POST" class="one">
                 <h1>Login</h1>
                 <div class="input-box">
                     <input type="text" id="nameUser" placeholder="Username" required>
@@ -34,7 +34,7 @@
             </form>
         </div>
         <div class="form-box Registr">
-            <form action="" class="one" id="form">
+            <form action="/api/register" method="POST" class="one" id="form">
                 <h1>Registration</h1>
                 <div class="input-box">
                     <input type="text" id="Username" placeholder="username"  required >
@@ -71,7 +71,7 @@
             </div>
         </div>
     </div>
-    <script src="/loginClient/script.js">
+    <script src="script.js">
         
     </script>
 </body>

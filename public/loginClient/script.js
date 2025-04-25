@@ -30,6 +30,7 @@ btnR.addEventListener('click', async function (e) {
             password: Password }) 
         });
         const data = await response.json();
+        alert('تمت العملية بنجاح');
     } catch (error) {
         console.error("Error fetching data:", error);
     }
@@ -39,6 +40,7 @@ btnL.addEventListener('click', async function (e) {
     e.preventDefault();
     const nameUser = document.getElementById('nameUser').value.trim();
     const pass = document.getElementById('pass').value.trim();
+    console.log(nameUser);
     try {
         const response = await fetch("http://localhost:3000/api/login", {
             method: "POST",
@@ -52,7 +54,7 @@ btnL.addEventListener('click', async function (e) {
         const data = await response.json();
        
         if (data.message === "the account exists") {
-            window.location.href = "../client/index.html"; // ✅ انتقال إلى صفحة أخرى
+            window.location.href = "/Reclamation"; // ✅ انتقال إلى صفحة أخرى
         } else {
             alert("❌ Incorrect username or password!                                                    ❌ اسم المستخدم أو كلمة المرور غير صحيحة!");
         }

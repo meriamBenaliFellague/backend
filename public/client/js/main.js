@@ -235,3 +235,16 @@ function setupFormValidation() {
         }
     });
 }
+
+//Add Reclamation
+const btnS = document.getElementById('btnS');
+
+btnS.addEventListener('click', async function (e) {
+    e.preventDefault();
+
+    const type = document.querySelector('input[name="complaintType"]:checked').value;
+    const name = document.getElementById('nom').value.trim();
+    const municipality = document.getElementById('municipality').value;
+    const surname = document.getElementById('prenom').value.trim();
+    const subscriber_ID = document.getElementById('codeAbonne').value.trim();
+})

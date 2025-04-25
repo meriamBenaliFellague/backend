@@ -9,6 +9,7 @@ const multer = require('multer');
 const storage = multer.memoryStorage(); // باش نخلي الصورة في الذاكرة
 const upload = multer({ storage: storage });
 
+
 const bcrypt = require('bcrypt');
 
 async function hashPassword(password) {
@@ -43,18 +44,26 @@ async function create_account(req, res){
   };
 //login client
   async function login_account(req,res){
+    console.log("📥البيانات ة:", req.body);
     const { username,password } = req.body;
-    const user = await SchemaClient.findOne({ username});
-  if (user && password === user.password) {
-    //The account exists
-    console.log("the account exists");
-    const userId = user.id;
-    req.session.clientId = userId;
-    return res.status(201).json({ message:"the account exists"});
-  } else {
-    //Account does not exist
-    console.log("the account not exists");
-    return res.status(401).json({ message: "the account not exists" });
+    try{
+      const user = await SchemaClient.findOne({ username});
+      if (!user) {
+        console.log("the account not exists");
+        return res.status(401).json({ message: "the account not exists" });
+      }
+    if (password != user.password) {
+      console.log("the account not exists");
+        return res.status(401).json({ message: "the account not exists" });
+    }
+      console.log("the account exists");
+      const userId = user.id;
+      req.session.clientId = userId;
+      console.log(userId);
+      return res.status(201).json({ message:"the account exists"});
+    }catch (err) {
+      console.log("err:", err.message);
+      return res.status(500).json({ message: "حدث خطأ في السيرفر" });
   }
 }
 
@@ -117,14 +126,22 @@ if (user && await bcrypt.compare(password, user.password)) {
 async function login_accountAdmin(req,res){
   //const username= "admin";const password= "admin";
     const { username,password } = req.body;
+  try{
     const user = await AdminDb.findOne({ username,password});
-  if (user) {
-    //The account exists
-    console.log("the account exists");
-  } else {
-    //Account does not exist
-    console.log("the account not exists")
+    if (!user) {
+      console.log("the account not exists");
+      return res.status(401).json({ message: "the account not exists" });
+    }
+  if (password != user.password) {
+    console.log("the account not exists");
+      return res.status(401).json({ message: "the account not exists" });
   }
+    console.log("the account exists");
+    return res.status(201).json({ message:"the account exists"});
+  }catch (err) {
+    console.log("err:", err.message);
+    return res.status(500).json({ message: "حدث خطأ في السيرفر" });
+}
   }
 
 //create reclamation
