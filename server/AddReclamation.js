@@ -5,5 +5,5 @@ const multer = require('multer');
 const storage = multer.memoryStorage(); // باش نخلي الصورة في الذاكرة
 const upload = multer({ storage: storage });
 
-router.post("/Addreclamation", upload.array('Photos', 10), methode.create_reclamation);
+router.post("/", upload.array('Photos', 5), methode.create_reclamation);
 module.exports=router;

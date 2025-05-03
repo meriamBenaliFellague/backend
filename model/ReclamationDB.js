@@ -8,6 +8,7 @@ const reclamation = new Schema(
     clientId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "SchemaClient",
+      required: true,
     },
     responsableId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -20,6 +21,8 @@ const reclamation = new Schema(
     },
     Type: {//تقنية ولا تجارية
       type: String,
+      enum: ["تقنية", "تجارية"],
+      default: "تقنية",
       required: true,
     },
     Name: {
@@ -54,12 +57,13 @@ const reclamation = new Schema(
         type: String,
         required: true,
     },
-    Photos: {
+    Photos: [{
       data: Buffer,
       contentType: String,
-    },
+    }],
     Status: {//pending ...
       type: String,
+      default: "Pending",
       required: true,
     },
     Note: {//خاص ب responsable de group
@@ -75,4 +79,4 @@ const reclamation = new Schema(
 )
 
 const SchemaReclamation = mongoose.model("reclamation", reclamation);
-module.exports = SchemaReclamation;
+module.exports = {SchemaReclamation};

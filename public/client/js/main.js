@@ -238,13 +238,105 @@ function setupFormValidation() {
 
 //Add Reclamation
 const btnS = document.getElementById('btnS');
-
+  
 btnS.addEventListener('click', async function (e) {
     e.preventDefault();
 
-    const type = document.querySelector('input[name="complaintType"]:checked').value;
+    const type = document.querySelector('input[name="Type"]:checked').value;
     const name = document.getElementById('nom').value.trim();
     const municipality = document.getElementById('municipality').value;
     const surname = document.getElementById('prenom').value.trim();
     const subscriber_ID = document.getElementById('codeAbonne').value.trim();
-})
+    const phone = document.getElementById('mobile').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const complaint = document.getElementById('reclamation').value.trim();
+    const photo = document.getElementById('photoInput');
+
+    const formData = new FormData();
+
+    formData.append("Name", name);
+    formData.append("Type", type);
+    formData.append("Surname", surname);
+    formData.append("Phone", phone);
+    formData.append("Municipality", municipality);
+    formData.append("Subscriber_ID", subscriber_ID);
+    formData.append("Address", address);
+    formData.append("Email", email);
+    formData.append("Complaint", complaint);
+    const files = photo.files;
+  if (files.length > 0) {
+    for (let i = 0; i < files.length; i++) {
+        formData.append('Photos', files[i]); // 
+    }
+  }
+  for (let pair of formData.entries()) {
+    console.log(`${pair[0]}:`, pair[1]);
+  }
+
+  try {
+    const response = await fetch("http://localhost:3000/api/addReclamation", {
+      method: "POST",
+      credentials: 'include',
+      body: formData 
+    });
+
+    const data = await response.json();
+    DisplayReclamations();
+    alert('تمت العملية بنجاح');
+    document.getElementById("complaintForm").reset();
+} catch (error) {
+    console.error("Error fetching data:", error);
+}
+});
+
+//Display Reclamations
+
+async function DisplayReclamations(){
+    try {
+        const response = await fetch("http://localhost:3000/api/DisplayReclamationClient", {
+          method: "GET",
+          credentials: "include", // باش تبعث الكوكي تاع السيشن
+        });
+    
+        if (!response.ok) {
+          throw new Error("فشل في جلب البيانات");
+        }
+    
+        const reclamations = await response.json();
+        renderReclamations(reclamations);
+        // هنا تقدر تعرضهم فـ DOM حسب الشكل لي تحب
+      } catch (error) {
+        console.error("❌ خطأ في جلب الشكاوى:", error);
+      }
+}
+
+
+function renderReclamations(reclamations) {
+    const containerList = document.getElementById('complaints-list');
+    containerList.innerHTML = ""; // نفرغ القديم
+  
+    reclamations.forEach(r => {
+      const item = document.createElement("div");
+      item.className = 'complaint-item';
+      item.innerHTML = `
+      <div class="complaint-header">
+            <span class="complaint-date">${r.createdAt}</span>
+            <span class="complaint-status resolved">
+                <i class="fas fa-check-circle"></i>
+                ${r.Status}
+            </span>
+        </div>
+        <div class="complaint-content">
+            <p class="complaint-text">${r.Complaint}</p>
+            <div class="complaint-details">
+                <span><i class="fas fa-map-marker-alt"></i> ${r.Address}</span>
+                <span><i class="fas fa-tag"></i> ${r.Type}</span>
+            </div>
+        </div>
+      `;
+      containerList.appendChild(item);
+    });
+  }
+
+  window.onload = DisplayReclamations;

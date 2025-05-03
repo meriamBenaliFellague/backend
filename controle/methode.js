@@ -57,9 +57,9 @@ async function create_account(req, res){
         return res.status(401).json({ message: "the account not exists" });
     }
       console.log("the account exists");
-      const userId = user.id;
+      const userId = user._id;
       req.session.clientId = userId;
-      console.log(userId);
+      console.log(req.session.clientId);
       return res.status(201).json({ message:"the account exists"});
     }catch (err) {
       console.log("err:", err.message);
@@ -147,12 +147,15 @@ async function login_accountAdmin(req,res){
 //create reclamation
 async function create_reclamation(req,res){
   //const account = new SchemaReclamation({ id: 1, Name: "meriam", email: "be2430423", password: "1234" });
-  const { Name, Surname, Phone, Municipality, Subscriber_ID, Address, Email, Complaint} = req.body;
-  const Status = "Pending";
+  const { Name, Type, Surname, Phone, Municipality, Subscriber_ID, Address, Email, Complaint} = req.body;
   const id = `post${Math.floor(Math.random() * 100000)}`;
   const clientId = req.session.clientId ;
-  const Photos = req.files.map(file => file.buffer);
-  const account = new SchemaReclamation({ clientId, id, Name, Surname, Phone, Municipality, Subscriber_ID, Address, Email, Complaint, Photos, Status});
+  console.log(req.session.clientId);
+  const Photos = req.files.map(file =>({
+    data: file.buffer,
+    contentType: file.mimetype
+  }));console.log("📸 عدد الصور المستقبلة:", req.files.length);
+  const account = new SchemaReclamation({ clientId, id, Type, Name, Surname, Phone, Municipality, Subscriber_ID, Address, Email, Complaint, Photos});
   account
     .save()
     .then((result) => res.status(201).json(result))
@@ -163,7 +166,7 @@ async function create_reclamation(req,res){
 async function display_reclamationClient(req,res){
   try {
     const clientId = req.session.clientId;
-    const reclamations = await SchemaReclamation.findById({ clientId });
+    const reclamations = await SchemaReclamation.find({ clientId });
     res.status(200).json(reclamations);
   } catch (err) {
     res.status(500).json({ error: "Erreur lors du chargement des réclamations" });
@@ -185,7 +188,9 @@ async function display_reclamationResponsable(req,res){
 //display New reclamation to Admin
 async function display_New_reclamation(req,res){
   try {
-    const reclamations = await SchemaReclamation.find({ Status:"Pending" });
+    const reclamations = await SchemaReclamation.find();
+    console.log("عدد الشكاوى:", reclamations.length);
+
     if (reclamations.length === 0) {
       return res.status(400).json({ message: "Aucune réclamation en attente." });
     }
@@ -220,5 +225,5 @@ async function display_New_reclamation(req,res){
   }
 
 module.exports = {create_account, login_account,create_accountUser,login_accountUser,login_accountAdmin,
-  create_reclamation,delet_accountUser,Admin, Responsable,
+  create_reclamation,delet_accountUser,Admin, Responsable,display_reclamationClient,display_New_reclamation
 };

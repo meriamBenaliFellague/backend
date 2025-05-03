@@ -27,71 +27,21 @@
                         <i class="fas fa-history"></i>
                         الشكاوى السابقة / Previous Complaints
                     </h4>
-                    <div class="complaints-list">
+                    <div class="complaints-list" id="complaints-list">
                         <!-- Example complaints will be replaced by dynamic content -->
-                        <div class="complaint-item">
-                            <div class="complaint-header">
-                                <span class="complaint-date">2025-03-21</span>
-                                <span class="complaint-status resolved">
-                                    <i class="fas fa-check-circle"></i>
-                                    تم الحل / Resolved
-                                </span>
-                            </div>
-                            <div class="complaint-content">
-                                <p class="complaint-text">مشكلة في أنابيب المياه في شارع الأمير عبد القادر</p>
-                                <div class="complaint-details">
-                                    <span><i class="fas fa-map-marker-alt"></i> عين الدفلى (36.2650, 1.9680)</span>
-                                    <span><i class="fas fa-tag"></i> شكوى تقنية</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="complaint-item">
-                            <div class="complaint-header">
-                                <span class="complaint-date">2025-03-20</span>
-                                <span class="complaint-status in-progress">
-                                    <i class="fas fa-clock"></i>
-                                    قيد المعالجة / In Progress
-                                </span>
-                            </div>
-                            <div class="complaint-content">
-                                <p class="complaint-text">انقطاع المياه في حي النصر</p>
-                                <div class="complaint-details">
-                                    <span><i class="fas fa-map-marker-alt"></i> عين الدفلى (36.2700, 1.9720)</span>
-                                    <span><i class="fas fa-tag"></i> شكوى تقنية</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="complaint-item">
-                            <div class="complaint-header">
-                                <span class="complaint-date">2025-03-19</span>
-                                <span class="complaint-status pending">
-                                    <i class="fas fa-exclamation-circle"></i>
-                                    في الانتظار / Pending
-                                </span>
-                            </div>
-                            <div class="complaint-content">
-                                <p class="complaint-text">مشكلة في الفواتير الشهرية</p>
-                                <div class="complaint-details">
-                                    <span><i class="fas fa-map-marker-alt"></i> عين الدفلى (36.2680, 1.9700)</span>
-                                    <span><i class="fas fa-tag"></i> شكوى تجارية</span>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
                 <div class="form-section">
                     <div class="radio-group mb-4">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="complaintType" value="تقنية" id="technical" checked>
+                            <input class="form-check-input" type="radio" name="Type" value="تقنية" id="technical" checked>
                             <label class="form-check-label" for="technical">
                                 شكوى تقنية / Technical Issue
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="complaintType" value="تجارية" id="commercial">
+                            <input class="form-check-input" type="radio" name="Type" value="تجارية" id="commercial">
                             <label class="form-check-label" for="commercial">
                                 شكوى تجارية / Commercial Issue
                             </label>
@@ -178,7 +128,7 @@
                                 <i class="fas fa-envelope"></i> البريد الإلكتروني / Email:
                             </label>
                             <input type="email" class="form-control" id="email" 
-                                   pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                                   
                                    placeholder="أدخل البريد الإلكتروني" required>
                             <div class="invalid-feedback">
                                 Please enter a valid email address

@@ -24,6 +24,7 @@ btnR.addEventListener('click', async function (e) {
             headers: {
                 "Content-Type": "application/json"
             },
+            credentials: 'include',
             body: JSON.stringify({ 
             username: Username, 
             email: Email, 
